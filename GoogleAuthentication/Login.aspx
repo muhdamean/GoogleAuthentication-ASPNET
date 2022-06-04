@@ -8,19 +8,37 @@
             <br />
             <div class="form-group">
                 <label class="">Email:</label>
-                <input type="text" class="form-control" placeholder="enter your email"/>
+                <input type="text" id="txtUsername" class="form-control" runat="server" placeholder="enter your email" required/>
             </div>
             <div class="form-group">
                 <label class="">Password:</label>
-                <input type="password" class="form-control" placeholder="enter your password"/>
+                <input type="password" id="txtPassword" class="form-control" runat="server" placeholder="enter your password" required/>
             </div>
-            <asp:Button ID="btnLogin" runat="server" CssClass="btn btn-primary" Text="Login"/>
+            <asp:Button ID="btnLogin" runat="server" CssClass="btn btn-primary" Text="Login" OnClientClick="setRequired();"/>
             <hr />
             <h5>Social Logins</h5>
-            <button type="submit" id="btnGoogle" runat="server" onserverclick="btnGoogle_ServerClick" class="btn btn-default">
+            <button type="submit" id="btnGoogle" runat="server" onserverclick="btnGoogle_ServerClick" 
+                onclick="relaxRequiredForGoogleAuth();"
+                class="btn btn-default">
                 <i class="fa fa-google"></i> | Sign in with Google
             </button>
             <%--<asp:Button ID="btnGoogle" runat="server" OnClick="btnGoogle_Click" CssClass="btn btn-default" Text="Login using Google" />--%>
             
     </div>
+    <script type="text/javascript">
+        function relaxRequiredForGoogleAuth() {
+            var username = document.getElementById("<%=txtUsername.ClientID%>");
+            var password = document.getElementById("<%=txtPassword.ClientID%>");
+            username.removeAttribute("required");
+            password.removeAttribute("required");
+            console.log("required removed");
+        }
+        function setRequired() {
+            var username = document.getElementById("<%=txtUsername.ClientID%>");
+            var password = document.getElementById("<%=txtPassword.ClientID%>");
+            username.setAttribute("required","");
+            password.setAttribute("required", "");
+            console.log("required set");
+        }
+    </script>
 </asp:Content>
